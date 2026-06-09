@@ -1,0 +1,48 @@
+name: Päivitä veikkaustilasto
+
+on:
+  # Automaattinen: tunnin välein kisan aikana
+  schedule:
+    - cron: "15 * * * *"   # joka tunti tasalta + 15 min
+
+  # Manuaalinen: voit painaa "Run workflow" GitHubissa
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # tarvitaan data.json:in commitointiin
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Asenna Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Asenna riippuvuudet
+        run: pip install requests openpyxl
+
+      - name: Hae data SharePointista ja generoi data.json
+        env:
+          SHAREPOINT_SITE_URL:   ${{ secrets.SHAREPOINT_SITE_URL }}
+          SHAREPOINT_FILE_PATH:  ${{ secrets.SHAREPOINT_FILE_PATH }}
+          AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET:   ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+        run: python scripts/update_data.py
+
+      - name: Commitoi data.json jos muuttunut
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          # Commitoi vain jos data muuttui (vältetään turhat commitit)
+          git diff --cached --quiet && echo "Ei muutoksia datassa." || \
+            git commit -m "auto: päivitä data.json $(date -u '+%Y-%m-%d %H:%M UTC')"
+
+      - name: Push
+        run: git push
