@@ -6,173 +6,125 @@
 <title>MM 2026 — Kisaveikkaus</title>
 <style>
   :root {
-    --green: #1a6b3c;
-    --green-light: #2d9d5c;
-    --gold: #f5c518;
-    --silver: #aab0bb;
-    --bronze: #cd7f32;
-    --bg: #0d1117;
-    --surface: #161b22;
-    --surface2: #21262d;
-    --border: #30363d;
-    --text: #e6edf3;
-    --text2: #8b949e;
-    --red: #f85149;
-    --radius: 10px;
+    --gold: #f5c518; --silver: #aab0bb; --bronze: #cd7f32;
+    --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+    --border: #30363d; --text: #e6edf3; --text2: #8b949e;
+    --green: #2d9d5c; --red: #f85149; --radius: 10px;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-  /* HEADER */
   .header {
-    background: linear-gradient(135deg, #0d2818 0%, #1a4a2a 50%, #0d2818 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 36px 24px 28px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(135deg,#0d2818 0%,#1a4a2a 50%,#0d2818 100%);
+    border-bottom:1px solid var(--border); padding:36px 24px 28px;
+    text-align:center; position:relative; overflow:hidden;
   }
   .header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='20' fill='none' stroke='rgba(255,255,255,0.025)' stroke-width='1'/%3E%3C/svg%3E") repeat;
-    pointer-events: none;
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='20' fill='none' stroke='rgba(255,255,255,0.025)' stroke-width='1'/%3E%3C/svg%3E") repeat;
   }
-  .header-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; position: relative; }
-  .header-ball { font-size: 44px; display: block; margin-bottom: 6px; position: relative; }
-  .header h1 { font-size: 30px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; margin-bottom: 4px; position: relative; }
-  .header-sub { font-size: 13px; color: rgba(255,255,255,.45); margin-bottom: 18px; position: relative; }
-  .updated-row { display: flex; align-items: center; justify-content: center; gap: 8px; position: relative; }
+  .header-eyebrow { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:10px; position:relative; }
+  .header-ball { font-size:44px; display:block; margin-bottom:6px; position:relative; }
+  .header h1 { font-size:30px; font-weight:800; color:var(--gold); letter-spacing:-.5px; margin-bottom:4px; position:relative; }
+  .header-sub { font-size:13px; color:rgba(255,255,255,.45); margin-bottom:18px; position:relative; }
+  .updated-row { display:flex; align-items:center; justify-content:center; gap:8px; position:relative; }
   .updated-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-    border-radius: 20px; padding: 4px 14px; font-size: 11px; color: rgba(255,255,255,.5);
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+    border-radius:20px; padding:4px 14px; font-size:11px; color:rgba(255,255,255,.5);
   }
-  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #2d9d5c; flex-shrink: 0; animation: pulse 2s infinite; }
+  .live-dot { width:7px; height:7px; border-radius:50%; background:#2d9d5c; flex-shrink:0; animation:pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
   .refresh-btn {
-    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
-    color: rgba(255,255,255,.5); border-radius: 20px; padding: 4px 12px;
-    font-size: 11px; cursor: pointer; font-family: inherit;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+    color:rgba(255,255,255,.5); border-radius:20px; padding:4px 12px;
+    font-size:11px; cursor:pointer; font-family:inherit;
   }
-  .refresh-btn:hover { background: rgba(255,255,255,.1); color: var(--text); }
+  .refresh-btn:hover { background:rgba(255,255,255,.1); color:var(--text); }
 
-  /* TABS */
   .tabs {
-    display: flex; gap: 2px; padding: 14px 20px 0;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    position: sticky; top: 0; z-index: 10;
-    overflow-x: auto;
+    display:flex; gap:2px; padding:14px 20px 0;
+    border-bottom:1px solid var(--border); background:var(--surface);
+    position:sticky; top:0; z-index:10; overflow-x:auto;
   }
   .tab {
-    padding: 9px 18px; font-size: 13px; font-weight: 600;
-    color: var(--text2); cursor: pointer; border: none;
-    border-bottom: 3px solid transparent; margin-bottom: -1px;
-    background: none; font-family: inherit; border-radius: 6px 6px 0 0;
-    transition: .15s; white-space: nowrap;
+    padding:9px 18px; font-size:13px; font-weight:600; color:var(--text2);
+    cursor:pointer; border:none; border-bottom:3px solid transparent;
+    margin-bottom:-1px; background:none; font-family:inherit;
+    border-radius:6px 6px 0 0; transition:.15s; white-space:nowrap;
   }
-  .tab:hover { color: var(--text); background: rgba(255,255,255,.04); }
-  .tab.active { color: var(--gold); border-bottom-color: var(--gold); background: rgba(245,197,24,.05); }
+  .tab:hover { color:var(--text); background:rgba(255,255,255,.04); }
+  .tab.active { color:var(--gold); border-bottom-color:var(--gold); background:rgba(245,197,24,.05); }
 
-  /* CONTENT */
-  .content { max-width: 960px; margin: 0 auto; padding: 20px 14px 60px; }
-  .panel { display: none; }
-  .panel.active { display: block; }
+  .content { max-width:960px; margin:0 auto; padding:20px 14px 60px; }
+  .panel { display:none; }
+  .panel.active { display:block; }
 
-  /* LOADING */
-  .loading {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 300px; gap: 16px;
-  }
-  .spinner {
-    width: 36px; height: 36px; border: 3px solid var(--border);
-    border-top-color: var(--gold); border-radius: 50%;
-    animation: spin .8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { color: var(--text2); font-size: 14px; }
-  .error-box {
-    background: rgba(248,81,73,.1); border: 1px solid rgba(248,81,73,.3);
-    border-radius: var(--radius); padding: 20px 24px; color: var(--red);
-    font-size: 13px; line-height: 1.6;
-  }
-  .error-box code { font-size: 12px; opacity: .8; }
+  .loading { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:300px; gap:16px; }
+  .spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin .8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-text { color:var(--text2); font-size:14px; }
+  .error-box { background:rgba(248,81,73,.1); border:1px solid rgba(248,81,73,.3); border-radius:var(--radius); padding:20px 24px; font-size:13px; line-height:1.6; }
+  .error-box strong { color:var(--red); }
+  .error-box code { font-size:11px; color:var(--text2); }
 
-  /* SECTION */
-  .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 18px; overflow: hidden; }
-  .section-header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-  .section-header h2 { font-size: 14px; font-weight: 700; }
-  .section-header .icon { font-size: 17px; }
-  .section-body { padding: 18px; }
+  .section { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:18px; overflow:hidden; }
+  .section-header { padding:14px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
+  .section-header h2 { font-size:14px; font-weight:700; }
+  .section-body { padding:18px; }
 
   /* LEADERBOARD */
-  .lb-grid { display: flex; flex-direction: column; gap: 10px; }
-  .lb-card {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 14px 18px;
-    display: flex; align-items: flex-start; gap: 14px;
-    transition: border-color .2s;
-  }
-  .lb-card:hover { border-color: rgba(245,197,24,.25); }
-  .lb-card.rank-1 { border-color: rgba(245,197,24,.45); background: rgba(245,197,24,.04); }
-  .lb-card.rank-2 { border-color: rgba(170,176,187,.3); }
-  .lb-card.rank-3 { border-color: rgba(205,127,50,.3); }
-  .lb-rank { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
-  .lb-rank.r1 { background: rgba(245,197,24,.2); color: var(--gold); }
-  .lb-rank.r2 { background: rgba(170,176,187,.15); color: var(--silver); }
-  .lb-rank.r3 { background: rgba(205,127,50,.15); color: var(--bronze); }
-  .lb-rank.rn { background: rgba(255,255,255,.06); color: var(--text2); font-size: 13px; }
-  .lb-main { flex: 1; min-width: 0; }
-  .lb-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
-  .lb-name { font-size: 17px; font-weight: 700; }
-  .lb-pts-wrap { display: flex; align-items: baseline; gap: 4px; }
-  .lb-pts { font-size: 26px; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; }
-  .lb-pts-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: .4px; }
-  .lb-parts { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-  .lb-part { background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: 5px; padding: 3px 9px; font-size: 11px; color: var(--text2); }
-  .lb-part span { font-weight: 700; color: var(--text); }
-  .lb-picks { display: flex; gap: 8px; flex-wrap: wrap; }
-  .lb-pick { background: rgba(45,157,92,.1); border: 1px solid rgba(45,157,92,.2); border-radius: 5px; padding: 3px 9px; font-size: 11px; }
-  .lb-pick-label { color: var(--text2); }
-  .lb-pick-val { color: #4ade80; font-weight: 600; }
+  .lb-grid { display:flex; flex-direction:column; gap:10px; }
+  .lb-card { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius); padding:14px 18px; display:flex; align-items:flex-start; gap:14px; transition:border-color .2s; }
+  .lb-card:hover { border-color:rgba(245,197,24,.25); }
+  .lb-card.rank-1 { border-color:rgba(245,197,24,.45); background:rgba(245,197,24,.04); }
+  .lb-card.rank-2 { border-color:rgba(170,176,187,.3); }
+  .lb-card.rank-3 { border-color:rgba(205,127,50,.3); }
+  .lb-rank { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; flex-shrink:0; margin-top:2px; }
+  .r1 { background:rgba(245,197,24,.2); color:var(--gold); }
+  .r2 { background:rgba(170,176,187,.15); color:var(--silver); }
+  .r3 { background:rgba(205,127,50,.15); color:var(--bronze); }
+  .rn { background:rgba(255,255,255,.06); color:var(--text2); font-size:13px; }
+  .lb-main { flex:1; min-width:0; }
+  .lb-top { display:flex; align-items:baseline; gap:12px; margin-bottom:8px; flex-wrap:wrap; }
+  .lb-name { font-size:17px; font-weight:700; }
+  .lb-pts { font-size:26px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums; }
+  .lb-pts-label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:.4px; }
+  .lb-parts { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .lb-part { background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:5px; padding:3px 9px; font-size:11px; color:var(--text2); }
+  .lb-part span { font-weight:700; color:var(--text); }
+  .lb-picks { display:flex; gap:8px; flex-wrap:wrap; }
+  .lb-pick { background:rgba(45,157,92,.1); border:1px solid rgba(45,157,92,.2); border-radius:5px; padding:3px 9px; font-size:11px; }
+  .lb-pick em { color:var(--text2); font-style:normal; }
+  .lb-pick strong { color:#4ade80; }
 
   /* TABLES */
-  .tbl-wrap { overflow-x: auto; }
-  .m-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .m-table thead th {
-    background: rgba(255,255,255,.04); padding: 9px 14px;
-    font-size: 11px; text-transform: uppercase; letter-spacing: .4px;
-    color: var(--text2); font-weight: 600; border-bottom: 1px solid var(--border);
-    text-align: left; position: sticky; top: 47px; white-space: nowrap;
-  }
-  .m-table thead th.num { text-align: right; }
-  .m-table tbody td { padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,.04); }
-  .m-table tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
-  .m-table tbody tr:hover td { background: rgba(255,255,255,.025); }
-  .m-table tr.total td { font-weight: 800; color: var(--gold); background: rgba(245,197,24,.06); border-top: 1px solid rgba(245,197,24,.2); border-bottom: none; }
+  .tbl-wrap { overflow-x:auto; }
+  .m-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .m-table thead th { background:rgba(255,255,255,.04); padding:9px 14px; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text2); font-weight:600; border-bottom:1px solid var(--border); text-align:left; position:sticky; top:47px; white-space:nowrap; }
+  .m-table thead th.num { text-align:right; }
+  .m-table tbody td { padding:9px 14px; border-bottom:1px solid rgba(255,255,255,.04); }
+  .m-table tbody td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .m-table tbody tr:hover td { background:rgba(255,255,255,.025); }
+  .m-table tr.total td { font-weight:800; color:var(--gold); background:rgba(245,197,24,.06); border-top:1px solid rgba(245,197,24,.2); border-bottom:none; }
 
   /* KERTYMÄ */
-  .filter-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 12px 18px; border-bottom: 1px solid var(--border); }
-  .filter-bar label { font-size: 12px; color: var(--text2); }
-  .filter-bar input {
-    background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-    border-radius: 6px; padding: 5px 10px; font-size: 13px; font-family: inherit; width: 200px;
-  }
-  .filter-bar input:focus { outline: none; border-color: var(--green-light); }
-  .pts-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: 700; font-size: 12px; }
-  .pts-pos { background: rgba(45,157,92,.2); color: #4ade80; }
-  .pts-zero { background: rgba(255,255,255,.06); color: var(--text2); }
-  .pts-neg { background: rgba(248,81,73,.15); color: var(--red); }
-  .kert-cum { font-size: 10px; color: var(--text2); margin-top: 2px; }
-  .match-future { color: var(--text2); }
+  .filter-bar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:12px 18px; border-bottom:1px solid var(--border); }
+  .filter-bar label { font-size:12px; color:var(--text2); }
+  .filter-bar input { background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:5px 10px; font-size:13px; font-family:inherit; width:200px; }
+  .filter-bar input:focus { outline:none; border-color:var(--green); }
+  .pts-badge { display:inline-block; padding:2px 7px; border-radius:4px; font-weight:700; font-size:12px; }
+  .pts-pos { background:rgba(45,157,92,.2); color:#4ade80; }
+  .pts-zero { background:rgba(255,255,255,.06); color:var(--text2); }
+  .pts-neg { background:rgba(248,81,73,.15); color:var(--red); }
+  .kert-cum { font-size:10px; color:var(--text2); margin-top:2px; }
+  .match-future td { color:var(--text2) !important; }
 
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    .header h1 { font-size: 22px; }
-    .lb-pts { font-size: 20px; }
-    .lb-name { font-size: 15px; }
-    .content { padding: 14px 8px 40px; }
+  @media(max-width:600px) {
+    .header h1 { font-size:22px; }
+    .lb-pts { font-size:20px; }
+    .lb-name { font-size:15px; }
+    .content { padding:14px 8px 40px; }
   }
 </style>
 </head>
@@ -193,69 +145,111 @@
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="showTab('pistetilanne', this)">🥇 Pistetilanne</button>
-  <button class="tab" onclick="showTab('pistekertymä', this)">📊 Pistekertymä</button>
+  <button class="tab active" onclick="showTab('pistetilanne',this)">🥇 Pistetilanne</button>
+  <button class="tab" onclick="showTab('kertymä',this)">📊 Pistekertymä</button>
 </div>
 
 <div class="content">
-
-  <!-- PISTETILANNE -->
   <div class="panel active" id="tab-pistetilanne">
-    <div id="pistetilanne-content">
-      <div class="loading"><div class="spinner"></div><div class="loading-text">Haetaan tuloksia...</div></div>
-    </div>
+    <div id="pistetilanne-content"><div class="loading"><div class="spinner"></div><div class="loading-text">Haetaan tuloksia...</div></div></div>
   </div>
-
-  <!-- PISTEKERTYMÄ -->
-  <div class="panel" id="tab-pistekertymä">
-    <div id="pistekertymä-content">
-      <div class="loading"><div class="spinner"></div><div class="loading-text">Haetaan otteluja...</div></div>
-    </div>
+  <div class="panel" id="tab-kertymä">
+    <div id="kertymä-content"><div class="loading"><div class="spinner"></div><div class="loading-text">Haetaan otteluja...</div></div></div>
   </div>
-
 </div>
 
 <script>
+// ─── Konfiguraatio ────────────────────────────────────────────────────────────
+// Muuta tämä osoittamaan SharePointissa olevaan data.json-tiedostoon.
+// Helpoin tapa: avaa data.json SharePointissa → kopioi URL (ilman ?web=1 -parametria)
+const DATA_URL = 'https://mehilainen.sharepoint.com/sites/businesscontrol/Jaetut%20asiakirjat/Ad%20hoc%20%26%20sekalaiset/MM-kisaveikkaus%202026/data.json?download=1';   // ← VAIHDA SharePoint-URL:ksi käyttöönotossa
+
+// ─── Värit pelaajille ─────────────────────────────────────────────────────────
 const COLORS = ['#f5c518','#4ade80','#60a5fa','#f87171','#c084fc','#fb923c','#34d399','#e879f9'];
+
 let DATA = null;
 let filteredMatches = [];
 
-// ── Data fetch ────────────────────────────────────────────────────────────────
-
+// ─── Data fetch ───────────────────────────────────────────────────────────────
 async function loadData() {
   document.getElementById('updated-text').textContent = 'Päivitetään...';
   try {
-    // Cache-busting parametri pakottaa selaimen hakemaan tuoreen version
-    const resp = await fetch('data.json?t=' + Date.now());
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    DATA = await resp.json();
+    const resp = await fetch(DATA_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error(`HTTP ${resp.status} — tarkista DATA_URL`);
+    const raw = await resp.json();
+    DATA = normalise(raw);
+    filteredMatches = DATA.matches;
 
     const dt = new Date(DATA.updated);
     document.getElementById('updated-text').textContent =
-      'Päivitetty ' + dt.toLocaleString('fi-FI', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+      'Päivitetty ' + dt.toLocaleString('fi-FI',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 
-    filteredMatches = DATA.matches;
     renderAll();
-  } catch (err) {
+  } catch(err) {
     document.getElementById('updated-text').textContent = 'Virhe ladattaessa';
-    ['pistetilanne-content','pistekertymä-content'].forEach(id => {
+    ['pistetilanne-content','kertymä-content'].forEach(id => {
       document.getElementById(id).innerHTML =
         `<div class="error-box">
           <strong>Dataa ei voitu ladata.</strong><br>
-          Varmista että <code>data.json</code> löytyy samasta kansiosta kuin tämä sivu.<br><br>
+          Tarkista että <code>data.json</code> sijaitsee oikeassa paikassa ja <code>DATA_URL</code> on asetettu oikein.<br><br>
           <code>${err.message}</code>
         </div>`;
     });
   }
 }
 
-function renderAll() {
-  renderPistetilanne();
-  renderPistekertymä();
+// ─── Normalisoi Power Automaten tuottama data ─────────────────────────────────
+// Power Automate lisää Excel-taulukon sarakenimiä sellaisenaan, mukaan lukien
+// _x000a_ (rivinvaihto) -korvaukset. Tämä funktio siivoaa ne.
+function normalise(raw) {
+  const clean = key => key.replace(/_x000a_/g, ' ').replace(/\s+/g, ' ').trim();
+
+  const players = (raw.players || []).map(row => {
+    const r = {};
+    Object.entries(row).forEach(([k,v]) => r[clean(k)] = v);
+    return {
+      sija:          Number(r['Sija'] || 0),
+      pelaaja:       r['Pelaaja'] || '',
+      pisteet:       Number(r['Pisteet yht.'] || 0),
+      osa_a:         Number(r['Osa A (alkulohkot)'] || 0),
+      osa_b:         Number(r['Osa B (jatkoon)'] || 0),
+      osa_c:         Number(r['Osa C (neljännes)'] || 0),
+      osa_d:         Number(r['Osa D (puoliväli)'] || 0),
+      osa_e:         Number(r['Osa E (välierät)'] || 0),
+      osa_f:         Number(r['Osa F (finaali)'] || 0),
+      osa_g:         Number(r['Osa G (erikois)'] || 0),
+      voittaja:      r['Loppuottelun voittaja'] || '-',
+      korttikuningas:r['Kortti- kuningas'] || '-',
+      maalikuningas: r['Maali- kuningas'] || '-',
+    };
+  });
+
+  // Laske sijoitukset uudelleen pisteiden perusteella
+  players.sort((a,b) => b.pisteet - a.pisteet);
+  let rank=0, prev=null;
+  players.forEach((p,i) => { if(p.pisteet!==prev){rank=i+1;} p.sija=rank; prev=p.pisteet; });
+
+  // Pelaajaanimet matches-rivien sarakkeista (kaikki paitsi #, aika, ottelu)
+  const FIXED = new Set(['#','Aloitus (FI-aika)','Ottelu','@odata.etag']);
+  const firstMatch = (raw.matches||[])[0] || {};
+  const playerNames = Object.keys(firstMatch).map(clean).filter(k => !FIXED.has(k) && !k.startsWith('@'));
+
+  const matches = (raw.matches || []).map(row => {
+    const r = {};
+    Object.entries(row).forEach(([k,v]) => r[clean(k)] = v);
+    const m = {
+      nro:    Number(r['#'] || 0),
+      aika:   r['Aloitus (FI-aika)'] || '',
+      ottelu: r['Ottelu'] || '',
+    };
+    playerNames.forEach(n => m[n] = Number(r[n] || 0));
+    return m;
+  });
+
+  return { updated: raw.updated || new Date().toISOString(), players, playerNames, matches };
 }
 
-// ── Tab navigation ────────────────────────────────────────────────────────────
-
+// ─── Tab-navigaatio ───────────────────────────────────────────────────────────
 function showTab(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -263,157 +257,121 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 
-// ── Pistetilanne ──────────────────────────────────────────────────────────────
+// ─── Pistetilanne ─────────────────────────────────────────────────────────────
+function renderAll() { renderPistetilanne(); renderKertymä(); }
 
 function renderPistetilanne() {
   if (!DATA) return;
   const { players } = DATA;
-  const sorted = [...players].sort((a,b) => b.pisteet - a.pisteet);
 
-  // Leaderboard
-  const lbHtml = sorted.map((p, i) => {
-    const rank = p.sija;
-    const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
-    const rClass = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : 'rn';
-    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
-    const color = COLORS[i % COLORS.length];
-
+  const lbHtml = players.map((p,i) => {
+    const rClass = p.sija===1?'r1':p.sija===2?'r2':p.sija===3?'r3':'rn';
+    const cardClass = p.sija===1?'rank-1':p.sija===2?'rank-2':p.sija===3?'rank-3':'';
+    const medal = p.sija===1?'🥇':p.sija===2?'🥈':p.sija===3?'🥉':p.sija;
+    const color = COLORS[i%COLORS.length];
     const parts = [
-      ['A Alkulohkot', p.osa_a], ['B Jatkoon', p.osa_b], ['C Neljännes', p.osa_c],
-      ['D Puoliväli', p.osa_d], ['E Välierät', p.osa_e], ['F Finaali', p.osa_f], ['G Erikois', p.osa_g],
+      ['A Alkulohkot',p.osa_a],['B Jatkoon',p.osa_b],['C Neljännes',p.osa_c],
+      ['D Puoliväli',p.osa_d],['E Välierät',p.osa_e],['F Finaali',p.osa_f],['G Erikois',p.osa_g],
     ].map(([l,v]) => `<div class="lb-part">${l}: <span>${fmt(v)}</span></div>`).join('');
-
     return `
-      <div class="lb-card ${rankClass}">
+      <div class="lb-card ${cardClass}">
         <div class="lb-rank ${rClass}">${medal}</div>
         <div class="lb-main">
           <div class="lb-top">
             <div class="lb-name" style="color:${color}">${p.pelaaja}</div>
-            <div class="lb-pts-wrap">
-              <div class="lb-pts">${fmt(p.pisteet)}</div>
-              <div class="lb-pts-label">p</div>
-            </div>
+            <div><span class="lb-pts">${fmt(p.pisteet)}</span> <span class="lb-pts-label">p</span></div>
           </div>
           <div class="lb-parts">${parts}</div>
           <div class="lb-picks">
-            <div class="lb-pick"><span class="lb-pick-label">🏆 </span><span class="lb-pick-val">${p.voittaja}</span></div>
-            <div class="lb-pick"><span class="lb-pick-label">🟨 </span><span class="lb-pick-val">${p.korttikuningas}</span></div>
-            <div class="lb-pick"><span class="lb-pick-label">⚽ </span><span class="lb-pick-val">${p.maalikuningas}</span></div>
+            <div class="lb-pick"><em>🏆 </em><strong>${p.voittaja}</strong></div>
+            <div class="lb-pick"><em>🟨 </em><strong>${p.korttikuningas}</strong></div>
+            <div class="lb-pick"><em>⚽ </em><strong>${p.maalikuningas}</strong></div>
           </div>
         </div>
       </div>`;
   }).join('');
 
-  // Osiotaulukko
-  const partCols = ['osa_a','osa_b','osa_c','osa_d','osa_e','osa_f','osa_g'];
+  const partKeys = ['osa_a','osa_b','osa_c','osa_d','osa_e','osa_f','osa_g'];
   const partLabels = ['Osa A<br><small>Alkulohkot</small>','Osa B<br><small>Jatkoon</small>','Osa C<br><small>Neljännes</small>','Osa D<br><small>Puoliväli</small>','Osa E<br><small>Välierät</small>','Osa F<br><small>Finaali</small>','Osa G<br><small>Erikois</small>'];
 
-  const ptsTbody = sorted.map((p,i) =>
+  const ptsTbody = players.map((p,i) =>
     `<tr>
       <td><span style="color:${COLORS[i%COLORS.length]};font-weight:700">${p.pelaaja}</span></td>
-      ${partCols.map(k => `<td class="num">${fmt(p[k])}</td>`).join('')}
+      ${partKeys.map(k=>`<td class="num">${fmt(p[k])}</td>`).join('')}
       <td class="num" style="font-weight:800;color:var(--gold)">${fmt(p.pisteet)}</td>
     </tr>`
-  ).join('') +
-  `<tr class="total"><td>Yhteensä</td>
-    ${partCols.map(k => `<td class="num">${fmt(players.reduce((s,p)=>s+p[k],0))}</td>`).join('')}
-    <td class="num">${fmt(players.reduce((s,p)=>s+p.pisteet,0))}</td>
-  </tr>`;
+  ).join('') + `<tr class="total"><td>Yhteensä</td>
+    ${partKeys.map(k=>`<td class="num">${fmt(players.reduce((s,p)=>s+p[k],0))}</td>`).join('')}
+    <td class="num">${fmt(players.reduce((s,p)=>s+p.pisteet,0))}</td></tr>`;
 
-  // Veikkaukset
-  const picksTbody = sorted.map((p,i) =>
+  const picksTbody = players.map((p,i) =>
     `<tr>
       <td><span style="color:${COLORS[i%COLORS.length]};font-weight:700">${p.pelaaja}</span></td>
-      <td>${p.voittaja}</td>
-      <td>${p.korttikuningas}</td>
-      <td>${p.maalikuningas}</td>
+      <td>${p.voittaja}</td><td>${p.korttikuningas}</td><td>${p.maalikuningas}</td>
     </tr>`
   ).join('');
 
   document.getElementById('pistetilanne-content').innerHTML = `
     <div class="section">
-      <div class="section-header"><span class="icon">🏅</span><h2>Sijoitustaulukko</h2></div>
+      <div class="section-header"><span>🏅</span><h2>Sijoitustaulukko</h2></div>
       <div class="section-body"><div class="lb-grid">${lbHtml}</div></div>
     </div>
-
     <div class="section">
-      <div class="section-header"><span class="icon">📋</span><h2>Pisteet osioittain</h2></div>
+      <div class="section-header"><span>📋</span><h2>Pisteet osioittain</h2></div>
       <div class="tbl-wrap">
         <table class="m-table">
-          <thead><tr>
-            <th>Pelaaja</th>
-            ${partLabels.map(l=>`<th class="num">${l}</th>`).join('')}
-            <th class="num" style="color:var(--gold)">Yhteensä</th>
-          </tr></thead>
+          <thead><tr><th>Pelaaja</th>${partLabels.map(l=>`<th class="num">${l}</th>`).join('')}<th class="num" style="color:var(--gold)">Yhteensä</th></tr></thead>
           <tbody>${ptsTbody}</tbody>
         </table>
       </div>
     </div>
-
     <div class="section">
-      <div class="section-header"><span class="icon">🎯</span><h2>Erikoisveikkaukset</h2></div>
+      <div class="section-header"><span>🎯</span><h2>Erikoisveikkaukset</h2></div>
       <div class="tbl-wrap">
         <table class="m-table">
-          <thead><tr>
-            <th>Pelaaja</th>
-            <th>🏆 Loppuottelun voittaja</th>
-            <th>🟨 Korttikuningas</th>
-            <th>⚽ Maalikuningas</th>
-          </tr></thead>
+          <thead><tr><th>Pelaaja</th><th>🏆 Loppuottelun voittaja</th><th>🟨 Korttikuningas</th><th>⚽ Maalikuningas</th></tr></thead>
           <tbody>${picksTbody}</tbody>
         </table>
       </div>
     </div>`;
 }
 
-// ── Pistekertymä ──────────────────────────────────────────────────────────────
-
-function renderPistekertymä() {
+// ─── Pistekertymä ─────────────────────────────────────────────────────────────
+function renderKertymä() {
   if (!DATA) return;
-  const { player_names, matches } = DATA;
+  const { playerNames, matches } = DATA;
 
-  // Laske kumulatiiviset pisteet kaikkien ottelujen yli
-  const cumByIdx = [];
-  const cum = {};
-  player_names.forEach(n => cum[n] = 0);
-  matches.forEach(m => {
-    player_names.forEach(n => cum[n] += (m[n] || 0));
-    cumByIdx.push({...cum});
+  // Kumulatiiviset pisteet
+  const cum = {}; playerNames.forEach(n => cum[n]=0);
+  const cumByIdx = matches.map(m => {
+    playerNames.forEach(n => cum[n] += (m[n]||0));
+    return {...cum};
   });
 
   const theadHtml = `<tr>
-    <th class="num">#</th>
-    <th>Aika (FI)</th>
-    <th>Ottelu</th>
-    ${player_names.map((n,i) => `<th class="num" style="color:${COLORS[i%COLORS.length]}">${n}</th>`).join('')}
+    <th class="num">#</th><th>Aika (FI)</th><th>Ottelu</th>
+    ${playerNames.map((n,i)=>`<th class="num" style="color:${COLORS[i%COLORS.length]}">${n}</th>`).join('')}
   </tr>`;
 
   const tbodyHtml = filteredMatches.map(m => {
     const idx = matches.indexOf(m);
-    const cumSnap = cumByIdx[idx];
-    const isFuture = player_names.every(n => (m[n] || 0) === 0);
-
-    const ptsCells = player_names.map((n,i) => {
-      const pts = m[n] || 0;
-      const bc = pts > 0 ? 'pts-pos' : pts < 0 ? 'pts-neg' : 'pts-zero';
-      const label = pts > 0 ? `+${fmt(pts)}` : fmt(pts);
-      return `<td class="num">
-        <span class="pts-badge ${bc}">${label}</span>
-        <div class="kert-cum">${fmt(cumSnap[n])} yht.</div>
-      </td>`;
-    }).join('');
-
-    return `<tr>
-      <td class="num" style="color:var(--text2);font-size:11px">${m.nro}</td>
-      <td class="${isFuture?'match-future':''}" style="font-size:12px">${m.aika}</td>
-      <td class="${isFuture?'match-future':''}">${m.ottelu}</td>
-      ${ptsCells}
+    const snap = cumByIdx[idx];
+    const isFuture = playerNames.every(n=>(m[n]||0)===0);
+    return `<tr class="${isFuture?'match-future':''}">
+      <td class="num" style="font-size:11px;color:var(--text2)">${m.nro}</td>
+      <td style="font-size:12px">${m.aika}</td>
+      <td>${m.ottelu}</td>
+      ${playerNames.map((n,i)=>{
+        const pts=m[n]||0;
+        const bc=pts>0?'pts-pos':pts<0?'pts-neg':'pts-zero';
+        return `<td class="num"><span class="pts-badge ${bc}">${pts>0?'+':''}${fmt(pts)}</span><div class="kert-cum">${fmt(snap[n])} yht.</div></td>`;
+      }).join('')}
     </tr>`;
   }).join('');
 
-  document.getElementById('pistekertymä-content').innerHTML = `
+  document.getElementById('kertymä-content').innerHTML = `
     <div class="section">
-      <div class="section-header"><span class="icon">📈</span><h2>Ottelukohtaiset pisteet — alkulohkot (1–72)</h2></div>
+      <div class="section-header"><span>📈</span><h2>Ottelukohtaiset pisteet — alkulohkot (1–72)</h2></div>
       <div class="filter-bar">
         <label>Hae:</label>
         <input type="text" id="match-filter" placeholder="esim. Espanja tai 14.06" oninput="filterMatches()">
@@ -421,7 +379,7 @@ function renderPistekertymä() {
       <div class="tbl-wrap">
         <table class="m-table">
           <thead>${theadHtml}</thead>
-          <tbody id="kert-tbody">${tbodyHtml}</tbody>
+          <tbody>${tbodyHtml}</tbody>
         </table>
       </div>
     </div>`;
@@ -430,27 +388,19 @@ function renderPistekertymä() {
 function filterMatches() {
   if (!DATA) return;
   const q = document.getElementById('match-filter').value.toLowerCase();
-  filteredMatches = q
-    ? DATA.matches.filter(m => m.ottelu.toLowerCase().includes(q) || m.aika.includes(q))
-    : DATA.matches;
-  renderPistekertymä();
+  filteredMatches = q ? DATA.matches.filter(m=>m.ottelu.toLowerCase().includes(q)||m.aika.includes(q)) : DATA.matches;
+  renderKertymä();
 }
-
-// ── Utils ─────────────────────────────────────────────────────────────────────
 
 function fmt(v) {
-  // Näytä kokonaislukunumerot ilman desimaaleja, muut yhdellä desimaalilla
-  if (v === null || v === undefined) return '0';
   const n = Number(v);
-  return Number.isInteger(n) ? n.toString() : n.toFixed(1);
+  if (isNaN(n)) return '0';
+  return Number.isInteger(n) ? String(n) : n.toFixed(1);
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
-
+// ─── Init ─────────────────────────────────────────────────────────────────────
 loadData();
-
-// Auto-refresh 5 minuutin välein
-setInterval(loadData, 5 * 60 * 1000);
+setInterval(loadData, 5 * 60 * 1000); // auto-refresh 5 min välein
 </script>
 </body>
 </html>
