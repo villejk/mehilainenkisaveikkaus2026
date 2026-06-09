@@ -202,47 +202,56 @@ async function loadData() {
 // Power Automate lisää Excel-taulukon sarakenimiä sellaisenaan, mukaan lukien
 // _x000a_ (rivinvaihto) -korvaukset. Tämä funktio siivoaa ne.
 function normalise(raw) {
-  const clean = key => key.replace(/_x000a_/g, ' ').replace(/\s+/g, ' ').trim();
+  // Muuntaa Excel-sarialinumeron päivämäärä+aika-merkkijonoksi
+  // Excel laskee päivät 1.1.1900 alkaen (Windows-epoch, off-by-2 korjaus mukana)
+  function excelDateToString(serial) {
+    if (!serial || isNaN(Number(serial))) return String(serial || '');
+    const n = Number(serial);
+    // Excel epoch: 1.1.1900 = 1, mutta siinä on leap year -bugi (+2 päivää pois)
+    const msPerDay = 86400000;
+    const excelEpoch = new Date(1899, 11, 30).getTime(); // 30.12.1899
+    const date = new Date(excelEpoch + n * msPerDay);
+    const d = date.getDate().toString().padStart(2,'0');
+    const mo = (date.getMonth()+1).toString().padStart(2,'0');
+    const h = date.getHours().toString().padStart(2,'0');
+    const mi = date.getMinutes().toString().padStart(2,'0');
+    return `${d}.${mo}. ${h}:${mi}`;
+  }
 
-  const players = (raw.players || []).map(row => {
-    const r = {};
-    Object.entries(row).forEach(([k,v]) => r[clean(k)] = v);
-    return {
-      sija:          Number(r['Sija'] || 0),
-      pelaaja:       r['Pelaaja'] || '',
-      pisteet:       Number(r['Pisteet yht.'] || 0),
-      osa_a:         Number(r['Osa A (alkulohkot)'] || 0),
-      osa_b:         Number(r['Osa B (jatkoon)'] || 0),
-      osa_c:         Number(r['Osa C (neljännes)'] || 0),
-      osa_d:         Number(r['Osa D (puoliväli)'] || 0),
-      osa_e:         Number(r['Osa E (välierät)'] || 0),
-      osa_f:         Number(r['Osa F (finaali)'] || 0),
-      osa_g:         Number(r['Osa G (erikois)'] || 0),
-      voittaja:      r['Loppuottelun voittaja'] || '-',
-      korttikuningas:r['Kortti- kuningas'] || '-',
-      maalikuningas: r['Maali- kuningas'] || '-',
-    };
-  });
+  // Power Automaten tuottamat avaimet suoraan — ei siivousta tarvita
+  const players = (raw.players || []).map(row => ({
+    sija:           Number(row['Sija'] || 0),
+    pelaaja:        row['Pelaaja'] || '',
+    pisteet:        Number(row['Pisteet yht_x002e_'] || 0),
+    osa_a:          Number(row['Osa A\n(alkulohkot)'] || 0),
+    osa_b:          Number(row['Osa B\n(jatkoon)'] || 0),
+    osa_c:          Number(row['Osa C\n(neljännes)'] || 0),
+    osa_d:          Number(row['Osa D\n(puoliväli)'] || 0),
+    osa_e:          Number(row['Osa E\n(välierät)'] || 0),
+    osa_f:          Number(row['Osa F\n(finaali)'] || 0),
+    osa_g:          Number(row['Osa G\n(erikois)'] || 0),
+    voittaja:       row['Loppuottelun\nvoittaja'] || '-',
+    korttikuningas: row['Kortti-\nkuningas'] || '-',
+    maalikuningas:  row['Maali-\nkuningas'] || '-',
+  }));
 
   // Laske sijoitukset uudelleen pisteiden perusteella
   players.sort((a,b) => b.pisteet - a.pisteet);
   let rank=0, prev=null;
   players.forEach((p,i) => { if(p.pisteet!==prev){rank=i+1;} p.sija=rank; prev=p.pisteet; });
 
-  // Pelaajaanimet matches-rivien sarakkeista (kaikki paitsi #, aika, ottelu)
-  const FIXED = new Set(['#','Aloitus (FI-aika)','Ottelu','@odata.etag']);
+  // Pelaajaanimet: kaikki matches-sarakkeet paitsi metatiedot
+  const SKIP = new Set(['@odata.etag','ItemInternalId','_x0023_','Aloitus (FI-aika)','Ottelu']);
   const firstMatch = (raw.matches||[])[0] || {};
-  const playerNames = Object.keys(firstMatch).map(clean).filter(k => !FIXED.has(k) && !k.startsWith('@'));
+  const playerNames = Object.keys(firstMatch).filter(k => !SKIP.has(k) && !k.startsWith('@'));
 
   const matches = (raw.matches || []).map(row => {
-    const r = {};
-    Object.entries(row).forEach(([k,v]) => r[clean(k)] = v);
     const m = {
-      nro:    Number(r['#'] || 0),
-      aika:   r['Aloitus (FI-aika)'] || '',
-      ottelu: r['Ottelu'] || '',
+      nro:    Number(row['_x0023_'] || 0),
+      aika:   excelDateToString(row['Aloitus (FI-aika)']),
+      ottelu: row['Ottelu'] || '',
     };
-    playerNames.forEach(n => m[n] = Number(r[n] || 0));
+    playerNames.forEach(n => m[n] = Number(row[n] || 0));
     return m;
   });
 
